@@ -8,13 +8,12 @@ class Node{
 
 class DoublyLinkedList{
     constructor(value){
-        const newNode = new Node(value)
+        let newNode = new Node(value)
         this.head = newNode
-        this.tail = this.head
+        this.tail = newNode
         this.length = 1
     }
     push(value){
-        //time complexity is the same as a singly-linked list. O(1). constant time operations
         let newNode = new Node(value)
         if (!this.head){
             this.head = newNode
@@ -22,15 +21,16 @@ class DoublyLinkedList{
             this.length++
             return this
         }
-        this.tail.next = newNode//set the last node in our list to point to the new node
-        newNode.prev = this.tail//set our new node to point back. this step is the only difference between a doubly and singly linked list
-        this.tail = newNode//set tail to point to our new last node
+        this.tail.next = newNode
+        newNode.prev = this.tail
+        this.tail=newNode
         this.length++
         return this
+
     }
-    pop(){//to pop off a value would be O(n) for a singly linked list, but the prev attribute turns this operation into O(1) for a doubly linked list
+    pop(){
         if (!this.head){
-            return this
+            return undefined
         }
         if (this.length==1){
             this.head = null
@@ -38,10 +38,10 @@ class DoublyLinkedList{
             this.length--
             return this
         }
-        let second2Last = this.tail.prev
-        second2Last.next = null
+        let previous = this.tail.prev
+        previous.next = null
         this.tail.prev = null
-        this.tail = second2Last
+        this.tail = previous
         this.length--
         return this
     }
@@ -51,8 +51,8 @@ class DoublyLinkedList{
             return this
         }
         let newNode = new Node(value)
-        newNode.next = this.head
         this.head.prev = newNode
+        newNode.next = this.head
         this.head = newNode
         this.length++
         return this
@@ -62,34 +62,29 @@ class DoublyLinkedList{
             return undefined
         }
         if (this.length==1){
-            this.pop()
+            this.head = null
+            this.tail = null
+            this.length--
             return this
         }
         let temp = this.head
-        this.head=this.head.next
-        this.head.prev = null
-        temp.next=null
+        this.head = this.head.next
+        this.head.prev=null
+        temp.next = null
         this.length--
         return this
     }
-    get(index){//time complexity is O(n)
+    get(index){
         if (index<0||index>this.length-1){
             return undefined
         }
         let temp = this.head
-        if (index<this.length/2){
-            for (let i=0;i<index;i++){
-                temp = temp.next
-            }
-        } else {
-            temp = this.tail
-            for (let i=this.length-1; i>index; i--){
-                temp = temp.prev
-            }
+        for (let i = 0;i<index;i++){
+            temp = temp.next
         }
         return temp
     }
-    set (index,value){
+    set(index,value){
         if (index<0||index>this.length-1){
             return undefined
         }
@@ -103,37 +98,33 @@ class DoublyLinkedList{
         }
         if (index==0){
             this.unshift(value)
-            return this
         }
         let newNode = new Node(value)
-        let previous = this.get(index-1)
-        let after = previous.next
-        previous.next = newNode
-        newNode.prev = previous
-        newNode.next = after
-        after.prev = newNode
+        let previousNode = this.get(index-1)
+        let nextNode = previousNode.next
+        previousNode.next=newNode
+        nextNode.prev=newNode
+        newNode.next = nextNode
+        newNode.prev = previousNode
         this.length++
         return this
     }
     remove(index){
-        if (index<0||index>this.length-1){
+        if (!this.head){
             return undefined
         }
-        if (index==0){
-            this.shift()
-            return this
-        }
-        if (index==this.length-1){
+        if (this.length==0){
             this.pop()
             return this
         }
         let temp = this.get(index)
         temp.prev.next = temp.next
         temp.next.prev = temp.prev
-        temp.next = null
         temp.prev = null
+        temp.next = null
         this.length--
         return this
+
     }
 }
 
@@ -142,7 +133,4 @@ example.push(2)
 example.push(3)
 example.pop()
 example.unshift(4)
-example.shift()
-example.insert(1,8)
-example.remove(1)
 console.log(example)
