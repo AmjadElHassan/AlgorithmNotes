@@ -9,26 +9,58 @@
 
 
 //1.) default arguments
-function insertSort(arr=[]){
-    //2.) typecheck, and handle 
-    if (Array.isArray(arr)!==true||arr.length===0){
-        return console.log(arr)
-    }
-    //3.) any variables
-    //4.)funciton logic
+// function insertSort(arr = []) {
+//     //2.) typecheck, and handle 
+//     if (Array.isArray(arr) !== true || arr.length === 0) {
+//         return console.log(arr)
+//     }
+//     //3.) any variables
+//     //4.)funciton logic
 
-    for (let i = 1;i<arr.length;i++){
+//     for (let i = 1; i < arr.length; i++) {
+//         checkAndSwap(i, arr)
+//     }
+//     //5.) return
+//     console.log(arr)
+// }
+
+// function checkAndSwap(index, array) {
+//     if (array[index] < array[index - 1]) {//if the previous iteration in the array is greater than the value at the current index position
+//         [array[index - 1], array[index]] = [array[index], array[index - 1]]
+//         checkAndSwap(index - 1, array)
+//     }
+//     return array
+// }
+
+//1.) default
+function insertSort(arr = []) {
+    //2.) type-check
+    if (!Array.isArray(arr)||arr===[]) {
+        return undefined
+    }
+    //3.) variable declaration
+    //4.) function logic
+    //note, start at i=1, because wee will be comparing to the previous index value
+    for (let i=1;i<arr.length;i++){
         checkAndSwap(i, arr)
     }
     //5.) return
-    console.log(arr)
+    return arr
 }
 
-function checkAndSwap(index, array){
-    if (array[index]<array[index-1]){//if the previous iteration in the array is greater than the value at the current index position
-        [array[index-1], array[index]] = [array[index], array[index-1]]
-        checkAndSwap(index-1, array) 
+//1.) default
+function checkAndSwap(index="", array=[]){
+    //2.) type check
+    
+    if (typeof index!=="number"||!Array.isArray(array)){
+        return undefined
+    }
+
+    if (array[index]<array[index-1]){
+        [array[index],array[index-1]] = [array[index-1], array[index]]
+        checkAndSwap(index-1, array)
     }
     return array
 }
-insertSort([8,5,2,9,5,6,3])
+
+console.log(insertSort([8, 5, 2, 9, 5, 6, 3]))
