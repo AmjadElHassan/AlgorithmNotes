@@ -5,6 +5,16 @@
 //this is to the every nth digit is a function of the last 2 numbers before it. 
 
 
+function giveFib(n){
+    //logic: if n<2
+    if (n<2){
+        return n
+    } else {
+        return giveFib(n-1)+ giveFib(n-2)
+    }
+}
+
+
 /**
  * function fibFind(): 
  * function should return the digit of fibonacci referring to its index.
