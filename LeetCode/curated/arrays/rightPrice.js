@@ -3,7 +3,7 @@
 //restrictions: choose 1 day to buy, and 1 day to sell
 
 function rightPrice(arr){
-    //i will find the greatest di
+
     let result = 0
     let min = arr[0]
     for (let i=1; i<arr.length; i++){
