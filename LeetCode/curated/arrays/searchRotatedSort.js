@@ -16,7 +16,7 @@ function searchRotate(arr, target) {
         }
 
         if (arr[m]>=arr[l]){
-            if (arr[l]<=target && target<=arr[m]){
+            if (arr[l]<=target && target<arr[m]){
                 r = m-1
             } else {
                 l = m + 1
